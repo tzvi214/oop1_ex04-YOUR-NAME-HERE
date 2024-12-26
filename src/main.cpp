@@ -7,8 +7,11 @@
 
 int main()
 {
-	Painter().run();
 
+	//Painter().run();
+	TextureManager texManager;
+	sf::Texture texture;
+	texture = texManager.getTexture('D');
 	return 0;
 }
 

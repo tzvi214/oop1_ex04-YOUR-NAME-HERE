@@ -2,9 +2,9 @@
 
 
 
-Button::Button(sf::Texture& texture, sf::Vector2f position) :m_texture(texture), m_position(position)
-{
-}
+Button::Button(const sf::Texture& texture, sf::Vector2f position) 
+	:m_texture(texture), m_position(position)
+{}
 
 void Button::draw(sf::RenderWindow& window) const
 {
