@@ -7,9 +7,7 @@
 
 int main()
 {
-
 	Painter().run();
-	
 	return EXIT_SUCCESS;
 }
 

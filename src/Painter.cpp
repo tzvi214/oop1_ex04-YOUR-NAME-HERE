@@ -3,29 +3,29 @@
 
 void Painter::run()
 {
-    updateTexture();
 
     std::cout << "Enter width and height\n";
     // First width, then height!
-    float boardHeight, boardWidth;
+    unsigned int boardHeight, boardWidth;
     std::cin >> boardWidth >> boardHeight;
 
-    float heightPixel = boardHeight * PixelSize;
-    float widthPixel = boardWidth * PixelSize;
+    unsigned int heightPixel = boardHeight * m_PixelSize;
+    unsigned int widthPixel = boardWidth * m_PixelSize;
+    m_toolBar.setToolbarWidht(widthPixel);
+    m_toolBar.updateVecButten();
+
+
 
 
 
     // create new window in the requested size
-    auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + toolbarHeight), "SFML: Hello Hanan");
-
-
-
+    auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + m_toolbarHeight), "SFML: Hello Hanan");
 
 
     while (window.isOpen())
     {
 
-        if (auto event = sf::Event{}; window.waitEvent(event))
+        /*if (auto event = sf::Event{}; window.waitEvent(event))
         {
             switch (event.type)
             {
@@ -33,31 +33,79 @@ void Painter::run()
                 window.close();
                 break;
             }
+        }*/
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
+
+            // starting the main function
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                sf::Vector2f location(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+                if (m_toolBar.pressIntoolbar(location))
+                {
+                    handlePress(window, location);
+                }
+            }
+
+
+
+            window.clear();
+            m_toolBar.draw(window);
+            window.display();
         }
 
-        window.clear();
-        m_toolBar.draw(window);
-        window.display();
     }
-
 }
 
-void Painter::updateTexture()
+//--------- private_function -------
+
+
+void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
 {
-    auto tempTexture = sf::Texture();
+    char c = m_toolBar.getCharPress(location);
+    if (nedd2add(c))
+    {
+        AddingObjects(window, location, c);
+    }
+   
 
-    tempTexture.loadFromFile("guard.jpg");
-    m_texture.setTexture(tempTexture, '!');
+   /* else if(nedd2save)
+    else if (nedd2...)*/
 
-    tempTexture.loadFromFile("door.jpg");
-    m_texture.setTexture(tempTexture, 'D');
-
-    tempTexture.loadFromFile("wall.jpg");
-    m_texture.setTexture(tempTexture, '#');
-
-    tempTexture.loadFromFile("robot.jpg");
-    m_texture.setTexture(tempTexture, '/');
-
-    tempTexture.loadFromFile("bomb.jpg");
-    m_texture.setTexture(tempTexture, '@');
 }
+
+bool Painter::nedd2add(char c) const
+{
+    return (c == '!' || c == '/' || c == 'D' || c == '@' || c == '#');
+}
+
+void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, char c)
+{
+    GameWindow gameWindow;
+
+    do
+    {
+        gameWindow.handleNewClick(location, c);
+        sf::Event event;
+        if (event.type == sf::Event::Closed)
+        {
+            window.close();
+            return;
+        }
+        if (event.type == sf::Event::MouseLeft)
+        {
+            sf::Vector2f location(sf::Mouse::getPosition(window));
+        }
+        gameWindow.print(window);
+        window.display();
+
+    } while (!m_toolBar.pressIntoolbar(location));
+
+}
+
+   

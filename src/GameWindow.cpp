@@ -39,5 +39,16 @@ void GameWindow::addObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 sf::Sprite GameWindow::creat(const sf::Texture& tex, const sf::Vector2f& location)
 {
-	return sf::Sprite();
+	auto newObject = sf::Sprite();
+	newObject.setPosition(location);
+	newObject.setTexture(tex);
+		return newObject;
+}
+//-------------------------------------
+void GameWindow::print(sf::RenderWindow& window) const
+{
+	for (auto i = size_t(0); i < m_textureVec.size(); i++)
+	{
+		window.draw(m_textureVec.at(i));
+    }
 }

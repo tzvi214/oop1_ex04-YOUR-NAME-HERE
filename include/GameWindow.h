@@ -7,7 +7,7 @@ class GameWindow
 {
 public:
 	void handleNewClick(const sf::Vector2f & location, char c);// maybe i need also sf::Window
-
+	void print(sf::RenderWindow& window) const;
 private:
 	       //---data_mamber---
 	sf::Sprite creat(const sf::Texture&, const sf::Vector2f& location);
@@ -17,7 +17,7 @@ private:
 	         //---function----
 	bool robotExist() const { return m_robotExist; }
 	bool itsRobot(char c) const {return c == m_robot ; }
-	bool need2delete(char c) const { return c == 'A'; }
+	bool need2delete(char c) const { return c == 'E'; }
 	void deleteObject(const sf::Vector2f & location, char c);
 	void addObject(const sf::Vector2f& location, char c);
 };

@@ -5,16 +5,23 @@
 #include "TextureManager.h"
 #include "GameWindow.h"
 
-const float PixelSize = 50;
-
 class Painter
 {
 public:
 	Painter() = default;
 	void run();
+	
 
 private:
-	void updateTexture();
+
+	const unsigned int m_PixelSize = 50;
 	TextureManager m_texture;
 	ToolBar m_toolBar;
-};
+
+	//--- function ----
+	
+	void handlePress(sf::RenderWindow& window, sf::Vector2f& location);
+	bool nedd2add(char c) const;
+	void  AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, char c);
+};  
+
