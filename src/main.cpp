@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+﻿#include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -8,11 +8,9 @@
 int main()
 {
 
-	//Painter().run();
-	TextureManager texManager;
-	sf::Texture texture;
-	texture = texManager.getTexture('D');
-	return 0;
+	Painter().run();
+	
+	return EXIT_SUCCESS;
 }
 
 /*
@@ -35,12 +33,12 @@ int main()
 		std::cout << "Enter Length and Width (type: float)\n";
 		std::cin >> sizewindow.length >> sizewindow.width;
 
-		// ????? ????? ?????? ???? ?? ???????
+		// ����� ����� ������ ���� �� �������
 		std::ofstream outputBoard(fileName);
 		if (outputBoard.is_open()) {
 			outputBoard << sizewindow.length << " " << sizewindow.width;
 			std::cout << "Data written to Board.txt\n";
-			outputBoard.close();  // ????? ?????
+			outputBoard.close();  // ����� �����
 		}
 		else {
 			std::cout << "Error opening the file to write.\n";
@@ -56,16 +54,16 @@ int main()
 	}
 
 	auto sprGuard = sf::Sprite(texGuard);
-	sprGuard.setScale(0.25f, 0.25f); // ????? ??? ???? ?? 50% ????? ??????
-	sprGuard.setPosition(200.0f, 100.0f); // ????? ?????? ???? X=200 ?-Y=100
+	sprGuard.setScale(0.25f, 0.25f); // ����� ��� ���� �� 50% ����� ������
+	sprGuard.setPosition(200.0f, 100.0f); // ����� ������ ���� X=200 �-Y=100
 
-	sf::RectangleShape toolbar(sf::Vector2f(1100.0f, 50.0f)); // ???? ????? 50 ???????
+	sf::RectangleShape toolbar(sf::Vector2f(1100.0f, 50.0f)); // ���� ����� 50 �������
 	toolbar.setFillColor(sf::Color::Cyan);
 	toolbar.setPosition(0, 0);
 
-	std::vector<sf::RectangleShape> buttons; // ????? ???? ?? ???????
+	std::vector<sf::RectangleShape> buttons; // ����� ���� �� �������
 
-	float buttonWidth = 100.0f;// ????? ?? ?? ?????
+	float buttonWidth = 100.0f;// ����� �� �� �����
 	float buttonHeight = 40.0f;
 	float spacing = 20.0f;
 
@@ -86,17 +84,17 @@ int main()
 	}
 
 
-	// ????? ???? ??? ?????
+	// ����� ���� ��� �����
 	std::vector<sf::Text>buttonLabels;
 	for (int i=0;i<buttons.size();i++)
 	{
 		sf::Text label
 		("Button " + std::to_string(i + 1), font, 16);
 
-		// ????? ????? ?? ??????
+		// ����� ����� �� ������
 		sf::Vector2f buttonPosition = buttons[i].getPosition();
-		label.setPosition(buttonPosition.x + 10.0f, buttonPosition.y + 5.0f); // ???? ??? ???? ??????
-		label.setFillColor(sf::Color::Black); // ??? ?????
+		label.setPosition(buttonPosition.x + 10.0f, buttonPosition.y + 5.0f); // ���� ��� ���� ������
+		label.setFillColor(sf::Color::Black); // ��� �����
 
 
 		buttonLabels.push_back(label);
@@ -110,7 +108,7 @@ int main()
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed) {
-				window.close();  // ???? ?? ????? ?? ???? ?? ????? ?????
+				window.close();  // ���� �� ����� �� ���� �� ����� �����
 			}
 		}
 
@@ -136,7 +134,7 @@ int main()
 	//#include <iostream>
 	//#include <fstream>
 	//#include <string>
-	//#include <filesystem>  // ?????? filesystem ?-C++17
+	//#include <filesystem>  // ������ filesystem �-C++17
 	//
 	//class sizeWindow {
 	//public:
@@ -148,7 +146,7 @@ int main()
 	//    sizeWindow sizewindow;
 	//    std::string fileName = "Board.txt";
 	//
-	//    // ????? ???? ????? ????? std::filesystem
+	//    // ����� ���� ����� ����� std::filesystem
 	//    if (std::filesystem::exists(fileName)) {
 	//        std::cout << "Board.txt exists\n";
 	//
@@ -156,7 +154,7 @@ int main()
 	//        if (Board.is_open()) {
 	//            Board >> sizewindow.length >> sizewindow.width;
 	//            std::cout << "length is: " << sizewindow.length << " width is: " << sizewindow.width << std::endl;
-	//            Board.close();  // ????? ?????
+	//            Board.close();  // ����� �����
 	//        }
 	//    }
 	//    else {
@@ -164,12 +162,12 @@ int main()
 	//        std::cout << "Enter Length and Width (type: float)\n";
 	//        std::cin >> sizewindow.length >> sizewindow.width;
 	//
-	//        // ????? ????? ?????? ???? ?? ???????
+	//        // ����� ����� ������ ���� �� �������
 	//        std::ofstream outputBoard(fileName);
 	//        if (outputBoard.is_open()) {
 	//            outputBoard << sizewindow.length << " " << sizewindow.width;
 	//            std::cout << "Data written to Board.txt\n";
-	//            outputBoard.close();  // ????? ?????
+	//            outputBoard.close();  // ����� �����
 	//        }
 	//        else {
 	//            std::cout << "Error opening the file to write.\n";
