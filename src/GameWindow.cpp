@@ -45,10 +45,11 @@ sf::Sprite GameWindow::creat(const sf::Texture& tex, const sf::Vector2f& locatio
 		return newObject;
 }
 //-------------------------------------
-void GameWindow::print(sf::RenderWindow& window) const
+void GameWindow::draw(sf::RenderWindow& window) const
 {
 	for (auto i = size_t(0); i < m_textureVec.size(); i++)
 	{
 		window.draw(m_textureVec.at(i));
+		
     }
 }

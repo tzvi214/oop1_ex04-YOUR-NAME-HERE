@@ -1,5 +1,5 @@
 #include "Painter.h"
-
+#include <iostream>
 
 void Painter::run()
 {
@@ -24,16 +24,6 @@ void Painter::run()
 
     while (window.isOpen())
     {
-
-        /*if (auto event = sf::Event{}; window.waitEvent(event))
-        {
-            switch (event.type)
-            {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            }
-        }*/
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -42,20 +32,19 @@ void Painter::run()
                 window.close();
             }
 
-            // starting the main function
             if (event.type == sf::Event::MouseButtonReleased)
             {
-                sf::Vector2f location(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+                auto location = window.mapPixelToCoords(
+                    { event.mouseButton.x, event.mouseButton.y });
                 if (m_toolBar.pressIntoolbar(location))
                 {
                     handlePress(window, location);
                 }
             }
 
-
-
             window.clear();
             m_toolBar.draw(window);
+            m_gameWindow.draw(window);
             window.display();
         }
 
@@ -73,7 +62,6 @@ void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
         AddingObjects(window, location, c);
     }
    
-
    /* else if(nedd2save)
     else if (nedd2...)*/
 
@@ -86,23 +74,39 @@ bool Painter::nedd2add(char c) const
 
 void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, char c)
 {
-    GameWindow gameWindow;
-
+    
     do
     {
-        gameWindow.handleNewClick(location, c);
         sf::Event event;
-        if (event.type == sf::Event::Closed)
+        while (window.waitEvent(event))
         {
-            window.close();
-            return;
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+                return;
+            }
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                auto location = window.mapPixelToCoords(
+                    { event.mouseButton.x, event.mouseButton.y });
+                if (!m_toolBar.pressIntoolbar(location))
+                {
+                    m_gameWindow.handleNewClick(location, c);
+
+                    window.clear();
+                    m_toolBar.draw(window);
+                    m_gameWindow.draw(window);
+                    window.display();
+                }
+                else
+                    return;
+            }
+            
+            else
+                continue;
+            
         }
-        if (event.type == sf::Event::MouseLeft)
-        {
-            sf::Vector2f location(sf::Mouse::getPosition(window));
-        }
-        gameWindow.print(window);
-        window.display();
+     
 
     } while (!m_toolBar.pressIntoolbar(location));
 

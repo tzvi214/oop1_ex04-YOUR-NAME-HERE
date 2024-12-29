@@ -7,13 +7,14 @@ class GameWindow
 {
 public:
 	void handleNewClick(const sf::Vector2f & location, char c);// maybe i need also sf::Window
-	void print(sf::RenderWindow& window) const;
+	void draw(sf::RenderWindow& window) const;
 private:
 	       //---data_mamber---
 	sf::Sprite creat(const sf::Texture&, const sf::Vector2f& location);
 	std::vector<sf::Sprite> m_textureVec;
 	char m_robot = '/';
 	bool m_robotExist = false;
+	
 	         //---function----
 	bool robotExist() const { return m_robotExist; }
 	bool itsRobot(char c) const {return c == m_robot ; }

@@ -109,10 +109,10 @@ void ToolBar::setToolbarWidht(unsigned int toolbarWidht)
 
 bool ToolBar::pressIntoolbar(const sf::Vector2f& location)
 {
-	/*if (location.x < 0 || location.x > m_toolbarWidht)
+	if (location.x < 0 || location.x > m_toolbarWidht)
 		return false;
 	if (location.y < 0 || location.y > m_toolbarHeight)
-		return false;*/
+		return false;
 
 	return true;
 }
