@@ -13,11 +13,11 @@ void GameWindow::handleNewClick(const sf::Vector2f& location, char c)
 void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 {
 	// the function can delete 2 or more object in one time
-	for (auto i = size_t(0); i < m_textureVec.size(); i++)
+	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		if (m_textureVec.at(i).getGlobalBounds().contains(location))
+		if (m_ImageVec.at(i).getSprite().getGlobalBounds().contains(location))
 		{
-			m_textureVec.erase(m_textureVec.begin() +i);
+			m_ImageVec.erase(m_ImageVec.begin() +i);
 
 			if (itsRobot(c))// i delete the robot
 				m_robotExist = false;
@@ -31,26 +31,18 @@ void GameWindow::addObject(const sf::Vector2f& location, char c)
 	TextureManager textureManager;
 	sf::Texture newTexture;
 	newTexture = textureManager.getTexture(c);
-	m_textureVec.push_back(creat(newTexture, location));
+	m_ImageVec.push_back(Image(newTexture, location));
 	
 	if (itsRobot(c))
 		m_robotExist = true;
 }
 //-------------------------------------
-sf::Sprite GameWindow::creat(const sf::Texture& tex, const sf::Vector2f& location)
-{
-	auto newObject = sf::Sprite();
-	newObject.setPosition(location);
-	newObject.setTexture(tex);
-	newObject.setScale(0.1f, 0.1f);
-		return newObject;
-}
-//-------------------------------------
 void GameWindow::draw(sf::RenderWindow& window) const
 {
-	for (auto i = size_t(0); i < m_textureVec.size(); i++)
+	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		window.draw(m_textureVec.at(i));
+		window.draw(m_ImageVec.at(i).getSprite());
 		
     }
 }
+//-------------------------------------

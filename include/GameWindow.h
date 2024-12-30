@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "TextureManager.h"
 #include <vector>
-
+#include "Image.h"
 class GameWindow
 {
 public:
@@ -10,8 +10,7 @@ public:
 	void draw(sf::RenderWindow& window) const;
 private:
 	       //---data_mamber---
-	sf::Sprite creat(const sf::Texture&, const sf::Vector2f& location);
-	std::vector<sf::Sprite> m_textureVec;
+	std::vector <Image> m_ImageVec;
 	char m_robot = '/';
 	bool m_robotExist = false;
 	
