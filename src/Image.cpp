@@ -12,3 +12,9 @@ sf::Sprite Image::getSprite() const
 	newObject.setScale(0.1f, 0.1f); 
 	return newObject;
 }
+
+char Image::getchar() const
+{
+	TextureManager textures;
+	return textures.getChar(m_texture);
+}

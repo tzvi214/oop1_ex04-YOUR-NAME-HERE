@@ -18,9 +18,9 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 		if (m_ImageVec.at(i).getSprite().getGlobalBounds().contains(location))
 		{
 			m_ImageVec.erase(m_ImageVec.begin() +i);
-
-			if (itsRobot(c))// i delete the robot
-				m_robotExist = false;
+			
+			//if (itsRobot(m_ImageVec.at(i).getchar()))// the function nat working 
+			//	m_robotExist = false;
 		}
 	}
 
@@ -45,4 +45,14 @@ void GameWindow::draw(sf::RenderWindow& window) const
 		
     }
 }
+//-------------------------------------
+void GameWindow::clearing()
+{
+	// i need to call to some dtor to delete the mammary
+	m_ImageVec.clear();
+	m_robotExist = false;
+}
+
+
+
 //-------------------------------------

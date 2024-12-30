@@ -20,9 +20,16 @@ private:
 	GameWindow m_gameWindow;
 
 	//--- function ----
-	
-	void handlePress(sf::RenderWindow& window, sf::Vector2f& );
+	void handlePress(sf::RenderWindow& window, sf::Vector2f&);
+
 	bool nedd2add(char c) const;
-	void  AddingObjects(sf::RenderWindow& window, sf::Vector2f& , char c);
+	void  AddingObjects(sf::RenderWindow& window, sf::Vector2f&, char c);
+	bool nedd2save(char c) const { return c =='S'; }
+	// void saving...
+	bool need2clear(char c) const { return c == 'C'; }	
+	void clearing() { m_gameWindow.clearing(); }// mayby its need to be const
+
+	
+	
 };  
 

@@ -3,13 +3,15 @@
 #include "TextureManager.h"
 #include <vector>
 #include "Image.h"
+
 class GameWindow
 {
 public:
-	void handleNewClick(const sf::Vector2f & location, char c);// maybe i need also sf::Window
+	void handleNewClick(const sf::Vector2f & location, char c);
 	void draw(sf::RenderWindow& window) const;
+	void clearing();// i need to call to some dtor to delete the mammary 
 private:
-	       //---data_mamber---
+	       //---data_member---
 	std::vector <Image> m_ImageVec;
 	char m_robot = '/';
 	bool m_robotExist = false;

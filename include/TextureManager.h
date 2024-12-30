@@ -7,7 +7,7 @@ public:
 	TextureManager();
 	sf::Texture& getTexture(const char);
 	char getChar(const sf::Texture&) const; 
-	bool compareImages(const sf::Image& img1, const sf::Image& img2) const;
+	bool compareImages(const sf::Image& img1, const sf::Image& img2) const;// private function
 private:
 	sf::Texture m_guardTex;
 	sf::Texture m_doorTex;

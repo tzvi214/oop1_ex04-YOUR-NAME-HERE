@@ -56,18 +56,26 @@ void Painter::run()
 
 void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
 {
-    char c = m_toolBar.getCharPress(location);
-    if (nedd2add(c))
+    while (window.isOpen())
     {
-        AddingObjects(window, location, c);
+        char c = m_toolBar.getCharPress(location);
+        if (nedd2save(c))
+        {
+            std::cout << "saving... \n \n";
+            return;
+        }
+        else if (need2clear(c))
+        {
+            std::cout << "clearing... \n ";
+            clearing();
+            return;
+        }
+        else if (nedd2add(c))
+        {
+            AddingObjects(window, location, c);
+        }
     }
-   
-   /* else if(nedd2save)
-    else if (nedd2...)*/
-
-    // i need to continue if the new press is in toolbar
-
-
+     
 }
 
 bool Painter::nedd2add(char c) const
@@ -75,46 +83,41 @@ bool Painter::nedd2add(char c) const
     return (c == '!' || c == '/' || c == 'D' || c == '@' || c == '#'|| c == 'E');
 }
 
-void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, char c)
+void Painter::AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, char c)
 {
     
-    
-        sf::Event event;
-        while (window.waitEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-                return;
-            }
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                auto location = window.mapPixelToCoords(
-                    { event.mouseButton.x, event.mouseButton.y });
-                if (!m_toolBar.pressIntoolbar(location))
-                {
-                    m_gameWindow.handleNewClick(location, c);
 
-                    window.clear();
-                    m_toolBar.draw(window);
-                    m_gameWindow.draw(window);
-                    window.display();
-                }
+   sf::Event event;
+   while (window.waitEvent(event))
+   {
+       if (event.type == sf::Event::Closed)
+       {
+           window.close();
+           return;
+       }
+       if (event.type == sf::Event::MouseButtonReleased)
+       {
+            location = window.mapPixelToCoords(
+               { event.mouseButton.x, event.mouseButton.y });
+           if (!m_toolBar.pressIntoolbar(location))
+           {
+               m_gameWindow.handleNewClick(location, c);
 
-                else if (m_toolBar.pressIntoolbar(location))
-                {
-                    return;
-                }
-            }
-            
-            else
-                continue;
-            
-        }
-     
+               window.clear();
+               m_toolBar.draw(window);
+               m_gameWindow.draw(window);
+               window.display();
+           }
 
-   
-
+           else if (m_toolBar.pressIntoolbar(location))
+           {
+               return;
+           }
+       }
+       
+       else
+           continue; 
+   }
 }
 
    
