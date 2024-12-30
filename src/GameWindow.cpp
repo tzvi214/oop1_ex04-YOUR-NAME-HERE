@@ -42,6 +42,7 @@ sf::Sprite GameWindow::creat(const sf::Texture& tex, const sf::Vector2f& locatio
 	auto newObject = sf::Sprite();
 	newObject.setPosition(location);
 	newObject.setTexture(tex);
+	newObject.setScale(0.1f, 0.1f);
 		return newObject;
 }
 //-------------------------------------

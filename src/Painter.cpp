@@ -65,18 +65,20 @@ void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
    /* else if(nedd2save)
     else if (nedd2...)*/
 
+    // i need to continue if the new press is in toolbar
+
+
 }
 
 bool Painter::nedd2add(char c) const
 {
-    return (c == '!' || c == '/' || c == 'D' || c == '@' || c == '#');
+    return (c == '!' || c == '/' || c == 'D' || c == '@' || c == '#'|| c == 'E');
 }
 
 void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, char c)
 {
     
-    do
-    {
+    
         sf::Event event;
         while (window.waitEvent(event))
         {
@@ -98,8 +100,11 @@ void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, c
                     m_gameWindow.draw(window);
                     window.display();
                 }
-                else
+
+                else if (m_toolBar.pressIntoolbar(location))
+                {
                     return;
+                }
             }
             
             else
@@ -108,7 +113,7 @@ void Painter::AddingObjects( sf::RenderWindow& window, sf::Vector2f& location, c
         }
      
 
-    } while (!m_toolBar.pressIntoolbar(location));
+   
 
 }
 
