@@ -4,12 +4,12 @@ void GameWindow::setRow(unsigned int row)
 {
 	m_row = row;
 }
-
+//-------------------------------------
 void GameWindow::setCol(unsigned int col)
 {
 	m_col = col;
 }
-
+//-------------------------------------
 void GameWindow::handleNewClick(const sf::Vector2f& location, char c)
 {
 	if (itsRobot(c) && robotExist())
@@ -27,10 +27,11 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 	{
 		if (m_ImageVec.at(i).getSprite().getGlobalBounds().contains(location))
 		{
-			m_ImageVec.erase(m_ImageVec.begin() + i);
+			if (itsRobot(m_ImageVec.at(i).getchar()))// the function nat working 
+				m_robotExist = false;
 
-			//if (itsRobot(m_ImageVec.at(i).getchar()))// the function nat working 
-			//	m_robotExist = false;
+			m_ImageVec.erase(m_ImageVec.begin() + i);
+	
 		}
 	}
 
