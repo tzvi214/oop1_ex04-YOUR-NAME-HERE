@@ -14,8 +14,8 @@ public:
 	void setToolbarWidht(unsigned int);
 	bool pressIntoolbar(const sf::Vector2f&);
 	char getCharPress(const sf::Vector2f&);//?????????????????
-
 private:
 	std::vector<Button> m_buttensVec;
 	unsigned int m_toolbarWidht;
+	int m_numButten;
 };
