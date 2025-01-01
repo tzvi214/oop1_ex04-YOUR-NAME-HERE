@@ -60,7 +60,7 @@ void Painter::run()
 
   }
 }
-//-----------------------------------
+//--------- private_function -------
 void Painter::loadBoardDimensions(unsigned int& boardHeight, unsigned int& boardWidth, bool& retFlag)
 {
     retFlag = true;
@@ -71,15 +71,15 @@ void Painter::loadBoardDimensions(unsigned int& boardHeight, unsigned int& board
 
         std::ifstream file(fileName);
         if (file.is_open()) {
-            file >> boardHeight; 
-            file >> boardWidth;  
+            file >> boardHeight;
+            file >> boardWidth;
             file.close();
 
             std::cout << "Read dimensions: Width = " << boardWidth << ", Height = " << boardHeight << "\n";
         }
         else {
             std::cerr << "Failed to open the file '" << fileName << "'.\n";
-            return exit(EXIT_FAILURE); 
+            return exit(EXIT_FAILURE);
         }
     }
     else {
@@ -90,10 +90,7 @@ void Painter::loadBoardDimensions(unsigned int& boardHeight, unsigned int& board
     }
     retFlag = false;
 }
-
-//--------- private_function -------
-
-
+//-----------------------------------
 void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
 {
     while (window.isOpen())
@@ -101,6 +98,7 @@ void Painter::handlePress( sf::RenderWindow& window, sf::Vector2f& location)
         char c = m_toolBar.getCharPress(location);
         if (nedd2save(c))
         {
+            save();
             std::cout << "saving... \n \n";
             return;
         }
