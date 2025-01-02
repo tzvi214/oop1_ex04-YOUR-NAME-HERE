@@ -27,7 +27,7 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 	{
 		if (m_ImageVec.at(i).getSprite().getGlobalBounds().contains(location))
 		{
-			if (itsRobot(m_ImageVec.at(i).getchar()))// the function nat working 
+			if (itsRobot(m_ImageVec.at(i).getchar()))
 				m_robotExist = false;
 
 			m_ImageVec.erase(m_ImageVec.begin() + i);
@@ -39,13 +39,21 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::addObject(const sf::Vector2f& location, char c)
 {
-	TextureManager textureManager;
+	/*TextureManager textureManager;
 	sf::Texture newTexture;
 	newTexture = textureManager.getTexture(c);
 	m_ImageVec.push_back(Image(newTexture, location));
 
 	if (itsRobot(c))
+		m_robotExist = true;*/
+
+	TextureManager textureManager;
+	std::string newObject = textureManager.getString(c);
+	m_ImageVec.push_back(Image(newObject, location));
+
+	if (itsRobot(c))
 		m_robotExist = true;
+
 }
 
 //-------------------------------------
@@ -59,7 +67,6 @@ void GameWindow::draw(sf::RenderWindow& window) const
 //-------------------------------------
 void GameWindow::clearing()
 {
-	// i need to call to some d-tor to delete the mammary
 	m_ImageVec.clear();
 	m_robotExist = false;
 }
