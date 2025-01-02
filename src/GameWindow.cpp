@@ -39,36 +39,32 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::addObject(const sf::Vector2f& location, char c)
 {
-	/*TextureManager textureManager;
-	sf::Texture newTexture;
-	newTexture = textureManager.getTexture(c);
-	m_ImageVec.push_back(Image(newTexture, location));
+ 	
+  TextureManager textureManager;
+  std::string newObject = textureManager.getString(c);
+  m_ImageVec.push_back(Image(newObject, location));
 
-	if (itsRobot(c))
-		m_robotExist = true;*/
-
-	TextureManager textureManager;
-	std::string newObject = textureManager.getString(c);
-	m_ImageVec.push_back(Image(newObject, location));
-
-	if (itsRobot(c))
-		m_robotExist = true;
+  if(itsRobot(c))
+ 	m_robotExist = true;
 
 }
-
 //-------------------------------------
 void GameWindow::draw(sf::RenderWindow& window) const
 {
+	TextureManager handleObject;
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		window.draw(m_ImageVec.at(i).getSprite());
+		//window.draw(m_ImageVec.at(i).getSprite());
+		handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
 	}
 }
 //-------------------------------------
 void GameWindow::clearing()
 {
 	m_ImageVec.clear();
+	m_SaveTxtVec.clear();
 	m_robotExist = false;
+
 }
 //-------------------------------------
 
@@ -79,7 +75,7 @@ void GameWindow::save()
 	{
 		SaveTXT addNew;
 		addNew.m_col = image.getPosition().x / m_PixelSize;
-		addNew.m_row = image.getPosition().y / m_PixelSize;
+		addNew.m_row = (image.getPosition().y -150)/ m_PixelSize;
 		addNew.m_ch = image.getchar();
 		m_SaveTxtVec.push_back(addNew);
 	}
@@ -105,7 +101,7 @@ void GameWindow::write2file() const
 
 
 	std::string fileName = "Board.txt";
-	std::ofstream file(fileName); // ���� �� ����� ������
+	std::ofstream file(fileName); 
 	if (!file) { std::cerr << "Failed to open file: " << fileName << std::endl; }
 	else {
 		file << m_row << std::endl << m_col << std::endl;
@@ -123,6 +119,3 @@ void GameWindow::write2file() const
 		file.close();
 	}
 }
-
-
-//-------------------------------------

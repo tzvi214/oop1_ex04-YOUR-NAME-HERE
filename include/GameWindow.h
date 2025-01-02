@@ -7,7 +7,6 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-#include <string>
 
 class GameWindow
 {

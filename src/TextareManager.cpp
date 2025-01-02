@@ -107,6 +107,27 @@ std::string TextureManager::getString(const char name) const
 
 }
 //--------------------------------
+// i didnt check if this function working
+void TextureManager::draw(sf::RenderWindow& window, std::string name, sf::Vector2f location) const
+{
+    auto newObject = sf::Sprite();
+    newObject.setPosition(location);
+    newObject.setTexture(getTexture(name));
+    newObject.setScale(0.1f, 0.1f);
+    window.draw(newObject);
+
+}
+//--------------------------------
+// i didnt check if this function warking
+void TextureManager::draw(sf::RenderWindow& window, char c, const sf::Vector2f& location) const
+{
+    /*auto newObject = sf::Sprite();
+    newObject.setPosition(location);
+    newObject.setTexture(getTexture(c));
+    newObject.setScale(0.1f, 0.1f);
+    window.draw(newObject);*/
+}
+//--------------------------------
 bool TextureManager::compareImages(const sf::Image& img1, const sf::Image& img2) const
 {
     if (img1.getSize() != img2.getSize())

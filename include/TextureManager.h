@@ -7,11 +7,14 @@ class TextureManager
 public:
 	TextureManager();
 	 sf::Texture& getTexture(const char) ;
-	char getChar(const sf::Texture&) const;
+	char getChar(const sf::Texture&) const;  
 	  // the new function
     const sf::Texture& getTexture(const std::string&) const;// i dont want to use this function
 	char getChar(const std::string&)const;
 	std::string getString(const char) const;
+	void draw(sf::RenderWindow& , std::string,  sf::Vector2f) const;// i need to finish this function
+	void draw(sf::RenderWindow& , char, const sf::Vector2f&) const;// this function will be for toolbar
+
 private:
 	bool compareImages(const sf::Image& img1, const sf::Image& img2) const;
 	sf::Texture m_guardTex;
