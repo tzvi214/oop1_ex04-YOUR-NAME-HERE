@@ -3,13 +3,14 @@
 Button::Button(sf::Texture& texture, sf::Vector2f positionStart, sf::Vector2f positionEnd)
 	:m_texture(texture), m_positionStart(positionStart), m_positionEnd(positionEnd)
 {
+	m_name = m_textureManager.getString(m_textureManager.getChar(m_texture));
 }
-
+//---------------------------------------------------------
 void Button::draw(sf::RenderWindow& window) const
 {
 	window.draw(create());
 }
-
+//---------------------------------------------------------
 sf::Sprite Button::create() const
 {
 	auto newObject = sf::Sprite();
@@ -29,4 +30,15 @@ sf::Sprite Button::create() const
 
 
 	return newObject;
+}
+//---------------------------------------------------------
+Button::Button(std::string name, sf::Vector2f positionStart, sf::Vector2f positionEnd)
+	:m_positionStart(positionStart), m_positionEnd(positionEnd), m_name(name)
+{ 
+	m_texture = m_textureManager.getTexture(name);
+}
+//---------------------------------------------------------
+sf::Texture Button::getTexture() const
+{
+	return m_textureManager.getTexture(m_name);
 }

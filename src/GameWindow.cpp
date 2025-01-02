@@ -30,6 +30,7 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 			if (itsRobot(m_ImageVec.at(i).getchar()))
 				m_robotExist = false;
 
+		
 			m_ImageVec.erase(m_ImageVec.begin() + i);
 	
 		}
