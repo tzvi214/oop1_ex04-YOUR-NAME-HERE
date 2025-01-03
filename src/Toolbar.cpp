@@ -27,7 +27,6 @@ void ToolBar::updateVecButten()
 		
 		StartWidhtButtem = (m_toolbarWidht / m_numButten) * counter;
 		endWidhtButtem = (m_toolbarWidht / m_numButten) * (counter + 1);
-		//Button button(tempTexture.getTexture(ch), sf::Vector2f(StartWidhtButtem, 0.f), sf::Vector2f(endWidhtButtem, 0.f));
 		Button button(tempTexture.getString(ch), sf::Vector2f(StartWidhtButtem, 0.f), sf::Vector2f(endWidhtButtem, 0.f));
 		m_buttensVec.push_back(button);
 
@@ -39,7 +38,6 @@ void ToolBar::updateVecButten()
 	{
 		StartWidhtButtem = (m_toolbarWidht / m_numButten) * counter;
 		endWidhtButtem = (m_toolbarWidht / m_numButten) * (counter + 1);
-		//Button button(tempTexture.getTexture(specialChar), sf::Vector2f(StartWidhtButtem, 0.f), sf::Vector2f(endWidhtButtem, 0.f));
 		Button button(tempTexture.getString(specialChar), sf::Vector2f(StartWidhtButtem, 0.f), sf::Vector2f(endWidhtButtem, 0.f));
 		m_buttensVec.push_back(button);
 
@@ -75,15 +73,13 @@ bool ToolBar::pressIntoolbar(const sf::Vector2f& location)
 	return true;
 }
 
-//?????????????????????
 char ToolBar::getCharPress(const sf::Vector2f& location)
 {
 	for (auto i = size_t(0); i < m_buttensVec.size(); i++)
 	{
-		if (m_buttensVec[i].create().getGlobalBounds().contains(location))
+		if (m_buttensVec[i].createSprite().getGlobalBounds().contains(location))
 		{
 			TextureManager textureMan;
-			//return textureMan.getChar(m_buttensVec[i].getTexture());
 			return textureMan.getChar((m_buttensVec[i].getString()));
 		}
 	}

@@ -38,23 +38,6 @@ sf::Texture& TextureManager::getTexture(const char ch)
     throw std::runtime_error("Texture not found");
 }
 //--------------------------------
-char TextureManager::getChar(const sf::Texture& texture) const
-{
-    sf::Image inputImage = texture.copyToImage();
-
-    if (compareImages(inputImage, m_guardTex.copyToImage())) return '!';
-    if (compareImages(inputImage, m_doorTex.copyToImage())) return 'D';
-    if (compareImages(inputImage, m_robotTex.copyToImage())) return '/';
-    if (compareImages(inputImage, m_wallTex.copyToImage())) return '#';
-    if (compareImages(inputImage, m_rockTex.copyToImage())) return '@';
-    if (compareImages(inputImage, m_saveTex.copyToImage())) return 'S';
-    if (compareImages(inputImage, m_clearPageTex.copyToImage())) return 'C';
-    if (compareImages(inputImage, m_eraserTex.copyToImage())) return 'E';
-
-    std::cerr << "getChar: Texture not found\n";
-    return '\0'; // Return null character if not found
-}
-//--------------------------------
 const sf::Texture& TextureManager::getTexture(const std::string& name) const
 {
     if (name == "guard")  return m_guardTex;
@@ -115,10 +98,9 @@ void TextureManager::draw(sf::RenderWindow& window, std::string name, sf::Vector
     newObject.setTexture(getTexture(name));
     newObject.setScale(0.1f, 0.1f);
     window.draw(newObject);
-
 }
 //--------------------------------
-// i didnt check if this function warking
+// i didnt check if this function working
 void TextureManager::draw(sf::RenderWindow& window, char c, const sf::Vector2f& location) const
 {
     /*auto newObject = sf::Sprite();
@@ -127,20 +109,4 @@ void TextureManager::draw(sf::RenderWindow& window, char c, const sf::Vector2f& 
     newObject.setScale(0.1f, 0.1f);
     window.draw(newObject);*/
 }
-//--------------------------------
-bool TextureManager::compareImages(const sf::Image& img1, const sf::Image& img2) const
-{
-    if (img1.getSize() != img2.getSize())
-        return false;
 
-    const sf::Uint8* pixels1 = img1.getPixelsPtr();
-    const sf::Uint8* pixels2 = img2.getPixelsPtr();
-
-    for (size_t i = 0; i < img1.getSize().x * img1.getSize().y * 4; ++i)
-    {
-        if (pixels1[i] != pixels2[i])
-            return false;
-    }
-
-    return true;
-}

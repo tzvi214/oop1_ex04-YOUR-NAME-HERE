@@ -12,7 +12,7 @@ Image::Image(const std::string& name, const sf::Vector2f& location)
 	m_char = m_textures.getChar(m_name);
 }
 //-------------------------------------
-sf::Sprite Image::getSprite() const
+sf::Sprite Image::createSprite() const
 {
 	auto newObject = sf::Sprite();
 	newObject.setPosition(m_position);

@@ -25,12 +25,11 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 	// the function can delete 2 or more object in one time
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		if (m_ImageVec.at(i).getSprite().getGlobalBounds().contains(location))
+		if (m_ImageVec.at(i).createSprite().getGlobalBounds().contains(location))
 		{
 			if (itsRobot(m_ImageVec.at(i).getchar()))
 				m_robotExist = false;
 
-		
 			m_ImageVec.erase(m_ImageVec.begin() + i);
 	
 		}
@@ -55,8 +54,8 @@ void GameWindow::draw(sf::RenderWindow& window) const
 	TextureManager handleObject;
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		//window.draw(m_ImageVec.at(i).getSprite());
-		handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
+		window.draw(m_ImageVec.at(i).createSprite());
+		//handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
 	}
 }
 //-------------------------------------
