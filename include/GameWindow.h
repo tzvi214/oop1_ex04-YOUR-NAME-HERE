@@ -16,7 +16,7 @@ public:
 	void save();
 	void handleNewClick(const sf::Vector2f & location, char c);
 	void draw(sf::RenderWindow& window) const;
-	void clearing();// i need to call to some dtor to delete the mammary 
+	void clearing();
 private:
 	       //---data_member---
 	std::vector <Image> m_ImageVec;
@@ -28,11 +28,13 @@ private:
 	unsigned int m_row;
 	
 	         //---function----
+	void drawTile(sf::RenderWindow& ) const;
 	bool robotExist() const { return m_robotExist; }
 	bool itsRobot(char c) const {return c == m_robot ; }
 	bool need2delete(char c) const { return c == 'E'; }
 	void deleteObject(const sf::Vector2f & location, char c);
 	void addObject(const sf::Vector2f& location, char c);
+
 	void write2file() const;
 
 };

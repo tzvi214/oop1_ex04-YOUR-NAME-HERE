@@ -23,4 +23,5 @@ private:
 	sf::Texture m_saveTex;
 	sf::Texture m_eraserTex;
 	sf::Texture m_clearPageTex;
+	sf::Texture m_tileTex;
 };

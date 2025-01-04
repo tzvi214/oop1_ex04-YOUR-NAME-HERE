@@ -19,7 +19,10 @@ TextureManager::TextureManager()
         std::cerr << "Failed to load save.jpeg\n";
     if (!m_eraserTex.loadFromFile("eraser.jpg"))
         std::cerr << "Failed to load eraser.jpg\n";
+    if (!m_tileTex.loadFromFile("tile.jpg"))
+        std::cerr << "Failed to load tile.jpg\n";
 }
+
 //--------------------------------
 sf::Texture& TextureManager::getTexture(const char ch)
 {
@@ -33,6 +36,7 @@ sf::Texture& TextureManager::getTexture(const char ch)
     case 'S': return m_saveTex;
     case 'C': return m_clearPageTex;
     case 'E': return m_eraserTex;
+	case 'T': return m_tileTex;
     }
     std::cerr << "getTexture: char not found\n";
     throw std::runtime_error("Texture not found");
@@ -48,7 +52,8 @@ const sf::Texture& TextureManager::getTexture(const std::string& name) const
     else if (name == "save")   return m_saveTex;
     else if (name == "erase")  return m_eraserTex;
     else if (name == "clearPage")  return m_clearPageTex;
-    
+	else if (name == "tile")  return m_tileTex;// i think i dont need to add this line
+
     // if i didnt find the string
     std::cerr << "getTexture: string not found\n";
     throw std::runtime_error("Texture not found");
@@ -65,7 +70,7 @@ char TextureManager::getChar(const std::string& name) const
     else if (name == "save")  return 'S';
     else if (name == "erase") return 'E';
     else if (name == "clearPage")  return 'C';
-
+	else if (name == "tile")  return 'T';// i think i dont need to add this line
 
 
     // if i didnt find the string
@@ -83,6 +88,8 @@ std::string TextureManager::getString(const char name) const
     else if (name == 'S') return "save";
     else if (name == 'E') return "erase";
     else if (name == 'C') return "clearPage";
+	else if (name == 'T') return "tile";// i think i dont need to add this line
+
 
     // if i didnt find the string
     std::cerr << "getTexture: char not found\n";
@@ -90,13 +97,12 @@ std::string TextureManager::getString(const char name) const
 
 }
 //--------------------------------
-// i didnt check if this function working
 void TextureManager::draw(sf::RenderWindow& window, std::string name, sf::Vector2f location) const
 {
     auto newObject = sf::Sprite();
     newObject.setPosition(location);
     newObject.setTexture(getTexture(name));
-    newObject.setScale(0.1f, 0.1f);
+    newObject.setScale(0.25f, 0.25f);
     window.draw(newObject);
 }
 //--------------------------------

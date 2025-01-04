@@ -17,7 +17,7 @@ sf::Sprite Image::createSprite() const
 	auto newObject = sf::Sprite();
 	newObject.setPosition(m_position);
 	newObject.setTexture(getTexture());
-	newObject.setScale(0.1f, 0.1f);
+	newObject.setScale(0.25f, 0.25f);
 	return newObject;
 	
 }

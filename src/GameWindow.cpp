@@ -39,10 +39,17 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::addObject(const sf::Vector2f& location, char c)
 {
- 	
+
+	int x = location.x/m_PixelSize;
+	int y = location.y /m_PixelSize;
+	x *= m_PixelSize;
+	y *= m_PixelSize;
+	sf::Vector2f newLocation(x, y);
+
   TextureManager textureManager;
   std::string newObject = textureManager.getString(c);
-  m_ImageVec.push_back(Image(newObject, location));
+ 
+  m_ImageVec.push_back(Image(newObject, newLocation));
 
   if(itsRobot(c))
  	m_robotExist = true;
@@ -52,10 +59,11 @@ void GameWindow::addObject(const sf::Vector2f& location, char c)
 void GameWindow::draw(sf::RenderWindow& window) const
 {
 	TextureManager handleObject;
+	drawTile(window);
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		window.draw(m_ImageVec.at(i).createSprite());
-		//handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
+		//window.draw(m_ImageVec.at(i).createSprite());
+		handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
 	}
 }
 //-------------------------------------
@@ -117,5 +125,20 @@ void GameWindow::write2file() const
 
 
 		file.close();
+	}
+}
+//-------------------------------------
+void GameWindow::drawTile(sf::RenderWindow& window) const
+{
+	TextureManager textureManager;
+	for (int i = 0; i < m_col; i++)
+	{
+		for (int j = 0; j < m_row; j++)
+		{
+			sf::Vector2f location;
+			location.x = i * m_PixelSize;
+			location.y = j * m_PixelSize + 150;// tolbar height
+			textureManager.draw(window, "tile", location);
+		}
 	}
 }

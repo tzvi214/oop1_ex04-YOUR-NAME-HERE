@@ -133,7 +133,7 @@ void Painter::AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, ch
             location = window.mapPixelToCoords(
                 { event.mouseButton.x, event.mouseButton.y });
 
-            // if -> this new location are on "GameWindoa" 
+            // if -> this new location are on "GameWindow" 
             if (!m_toolBar.pressIntoolbar(location))
             {
                 m_gameWindow.handleNewClick(location, c);
