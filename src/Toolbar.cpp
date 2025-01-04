@@ -86,3 +86,4 @@ char ToolBar::getCharPress(const sf::Vector2f& location)
 
 	return 0;
 }
+//---------------------------------------------------------

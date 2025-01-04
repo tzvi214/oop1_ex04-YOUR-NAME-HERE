@@ -21,11 +21,15 @@ sf::Sprite Button::createSprite() const
 
 	// Calculate the scale factors based on the desired end position
 	float scaleX = (m_positionEnd.x - m_positionStart.x) / textureSize.x;
+	float scaleY = static_cast<float>(m_toolbarHeight) / textureSize.y;
+
+	// Use the smaller of the two to ensure the height does not exceed m_toolbarHeight
+	scaleY = std::min(scaleY, 1.0f);
+
 	// Set the scale
-	newObject.setScale(scaleX, 1.0f);
+	newObject.setScale(scaleX, scaleY);
 	return newObject;
 }
-//---------------------------------------------------------
 
 const sf::Texture& Button::getTexture() const
 {

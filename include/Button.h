@@ -10,6 +10,7 @@ public:
 	sf::Sprite createSprite() const;  
 	std::string getString() const { return m_name; }
 private:
+	const float m_toolbarHeight = 150;
 	std::string m_name;
 	sf::Vector2f m_positionStart;
 	sf::Vector2f m_positionEnd;
