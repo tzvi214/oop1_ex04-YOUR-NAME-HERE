@@ -6,13 +6,12 @@ class TextureManager
 {
 public:
 	TextureManager();
-	sf::Texture& getTexture(const char);// maybe to changt it to getSprite
+	const sf::Texture& getTexture(const char) const;// maybe to change it to getSprite
 	const sf::Texture& getTexture(const std::string&) const;// maybe to change it to getSprite
 	char getChar(const std::string&)const;
 	std::string getString(const char) const;
 
-	void draw(sf::RenderWindow& , std::string,  sf::Vector2f) const;// i need to finish this function
-	void draw(sf::RenderWindow& , char, const sf::Vector2f&) const;// this function will be for toolbar
+	void draw(sf::RenderWindow& , std::string,  sf::Vector2f) const;
 
 private:
 	sf::Texture m_guardTex;

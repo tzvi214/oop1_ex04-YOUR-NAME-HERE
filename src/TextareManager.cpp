@@ -24,7 +24,7 @@ TextureManager::TextureManager()
 }
 
 //--------------------------------
-sf::Texture& TextureManager::getTexture(const char ch)
+const sf::Texture& TextureManager::getTexture(const char ch)const
 {
     switch (ch)
     {
@@ -105,14 +105,5 @@ void TextureManager::draw(sf::RenderWindow& window, std::string name, sf::Vector
     newObject.setScale(0.25f, 0.25f);
     window.draw(newObject);
 }
-//--------------------------------
-// i didnt check if this function working
-void TextureManager::draw(sf::RenderWindow& window, char c, const sf::Vector2f& location) const
-{
-    /*auto newObject = sf::Sprite();
-    newObject.setPosition(location);
-    newObject.setTexture(getTexture(c));
-    newObject.setScale(0.1f, 0.1f);
-    window.draw(newObject);*/
-}
+
 

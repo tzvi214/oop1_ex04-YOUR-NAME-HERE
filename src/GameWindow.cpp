@@ -39,15 +39,9 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::addObject(const sf::Vector2f& location, char c)
 {
+  sf::Vector2f newLocation = calculateCorrectLocation(location) ;
 
-	int x = location.x/m_PixelSize;
-	int y = location.y /m_PixelSize;
-	x *= m_PixelSize;
-	y *= m_PixelSize;
-	sf::Vector2f newLocation(x, y);
-
-  TextureManager textureManager;
-  std::string newObject = textureManager.getString(c);
+  std::string newObject = m_textureManager.getString(c);
  
   m_ImageVec.push_back(Image(newObject, newLocation));
 
@@ -58,12 +52,10 @@ void GameWindow::addObject(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::draw(sf::RenderWindow& window) const
 {
-	TextureManager handleObject;
 	drawTile(window);
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		//window.draw(m_ImageVec.at(i).createSprite());
-		handleObject.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
+		m_textureManager.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
 	}
 }
 //-------------------------------------
@@ -75,10 +67,17 @@ void GameWindow::clearing()
 
 }
 //-------------------------------------
+void GameWindow::setImageVec(const Image& image)
+{
+	if (itsRobot(m_textureManager.getChar(image.getString())))// if the image is robot
+		m_robotExist = true;
+
+	m_ImageVec.push_back(image);
+}
+//-------------------------------------
 
 void GameWindow::save()
 {
-	/*The truth is that the "IMAGE" class should do this part just for the sake of simplicity and to make it easier to debug. In the meantime, I wrote it here.*/
 	for (const auto& image : m_ImageVec)
 	{
 		SaveTXT addNew;
@@ -103,7 +102,8 @@ void GameWindow::write2file() const
 
 	for (const auto& chTXT : m_SaveTxtVec)
 	{
-		board[chTXT.m_row][chTXT.m_col] = chTXT.m_ch;
+	//	board[chTXT.m_row][chTXT.m_col] = chTXT.m_ch;
+		board.at(chTXT.m_row).at(chTXT.m_col) = chTXT.m_ch;
 	}
 
 
@@ -128,17 +128,26 @@ void GameWindow::write2file() const
 	}
 }
 //-------------------------------------
+sf::Vector2f GameWindow::calculateCorrectLocation(const sf::Vector2f& location)
+{
+	int x = location.x / m_PixelSize;
+	int y = location.y / m_PixelSize;
+	x *= m_PixelSize;
+	y *= m_PixelSize;
+	return sf::Vector2f(x, y);
+}
+
+//-------------------------------------
 void GameWindow::drawTile(sf::RenderWindow& window) const
 {
-	TextureManager textureManager;
 	for (int i = 0; i < m_col; i++)
 	{
 		for (int j = 0; j < m_row; j++)
 		{
 			sf::Vector2f location;
 			location.x = i * m_PixelSize;
-			location.y = j * m_PixelSize + 150;// tolbar height
-			textureManager.draw(window, "tile", location);
+			location.y = j * m_PixelSize + 150;// toolbar height
+			m_textureManager.draw(window, "tile", location);
 		}
 	}
 }
