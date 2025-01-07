@@ -1,6 +1,5 @@
 #include "TextureManager.h"
-#include <iostream>
-//--------------------------------
+
 TextureManager::TextureManager()
 {
     if (!m_guardTex.loadFromFile("guard.jpg"))

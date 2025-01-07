@@ -2,6 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include "Button.h"
 #include "vector"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "TextureManager.h"
+
 
 const float m_toolbarHeight = 150;
 
@@ -19,4 +24,5 @@ private:
 	std::vector<Button> m_buttensVec;
 	unsigned int m_toolbarWidht;
 	int m_numButten;
+	TextureManager m_textureManager;
 };

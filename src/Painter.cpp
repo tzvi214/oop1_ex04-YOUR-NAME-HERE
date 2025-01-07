@@ -1,5 +1,9 @@
 ﻿#include "Painter.h"
 
+Painter::Painter()
+    
+{ }
+//--------------------------------------------------------------
 void Painter::run()
 {
   unsigned int boardHeight = 0, boardWidth = 0;
@@ -32,7 +36,6 @@ void Painter::run()
 	} while (userClearAll);
 
 }
-
 //--------- private_function -------
 void Painter::handlePress(sf::RenderWindow& window, sf::Vector2f& location, bool& userClearAll)
 {
@@ -116,7 +119,6 @@ void Painter::clearing()
 {
 	m_gameWindow.clearing();
     m_toolBar.clear();
-
 }
 //--------------------------------------------------------------
 void Painter::loadBoardDimensions(unsigned int& boardHeight, unsigned int& boardWidth, bool userClearAll)
@@ -174,7 +176,7 @@ void Painter::printMovement(sf::RenderWindow& window, sf::Vector2f& location, sf
 {
    if (!m_toolBar.pressIntoolbar(location)) // if the user press on the "GameWindow"
    {
-      
+
        window.clear();
        m_toolBar.draw(window);
        m_gameWindow.draw(window);
@@ -201,9 +203,8 @@ sf::Sprite Painter::createTempSprite(char c)
         newSprite.setColor(sf::Color(255, 255, 255, 255));
     else
         newSprite.setColor(sf::Color(255, 255, 255, 123));
+   
     return newSprite;
-
-	
 }
 //--------------------------------------------------------------
 void Painter::handleWindowEvents(sf::RenderWindow& window, bool& userClearAll)

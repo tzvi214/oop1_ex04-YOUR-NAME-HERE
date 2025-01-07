@@ -20,7 +20,6 @@ public:
 	void setImageVec(const Image& image); 
 	bool robotExist() const { return m_robotExist; } 
 	bool itsRobot(char c) const { return c == m_robot; } 
-	sf::Vector2f calculateCorrectLocation(const sf::Vector2f& location);
 private:
 	       //---data_member---
 	std::vector <Image> m_ImageVec;
@@ -39,5 +38,5 @@ private:
 	void deleteObject(const sf::Vector2f & location, char c);
 	void addObject(const sf::Vector2f& location, char c);
 	void write2file() const;
-	
+	sf::Vector2f calculateCorrectLocation(const sf::Vector2f& location);
 };

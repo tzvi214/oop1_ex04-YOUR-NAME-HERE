@@ -11,7 +11,7 @@
 class Painter
 {
 public:
-	Painter() = default;
+	Painter();
 	void run();
 
 private:

@@ -30,7 +30,7 @@ sf::Sprite Button::createSprite() const
 	newObject.setScale(scaleX, scaleY);
 	return newObject;
 }
-
+//---------------------------------------------------------
 const sf::Texture& Button::getTexture() const
 {
 	

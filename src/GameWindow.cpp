@@ -20,6 +20,45 @@ void GameWindow::handleNewClick(const sf::Vector2f& location, char c)
 		addObject(location, c);
 }
 //-------------------------------------
+void GameWindow::clearing()
+{
+	m_ImageVec.clear();
+	m_SaveTxtVec.clear();
+	m_robotExist = false;
+
+}
+//-------------------------------------
+void GameWindow::setImageVec(const Image& image)
+{
+	if (itsRobot(m_textureManager.getChar(image.getName())))// if the image is robot
+		m_robotExist = true;
+
+	m_ImageVec.push_back(image);
+}
+//-------------------------------------
+void GameWindow::draw(sf::RenderWindow& window) const
+{
+	drawTile(window);
+	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
+	{
+		m_textureManager.draw(window, m_ImageVec.at(i).getName(), m_ImageVec.at(i).getPosition());
+	}
+}
+//-------------------------------------
+void GameWindow::save()
+{
+	for (const auto& image : m_ImageVec)
+	{
+		SaveTXT addNew;
+		addNew.m_col = image.getPosition().x / m_PixelSize;
+		addNew.m_row = (image.getPosition().y - 150) / m_PixelSize;
+		addNew.m_ch = m_textureManager.getChar(image.getName());
+		m_SaveTxtVec.push_back(addNew);
+	}
+
+	write2file();
+}
+//--------------- private_function ---------------------
 void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 {
 
@@ -29,11 +68,10 @@ void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 	{
 		if (m_ImageVec.at(i).getPosition() == correctLocation)                                                                   
 		{
-			if (itsRobot(m_textureManager.getChar(m_ImageVec.at(i).getString())))
+			if (itsRobot(m_textureManager.getChar(m_ImageVec.at(i).getName())))
 				m_robotExist = false;
 
 			m_ImageVec.erase(m_ImageVec.begin() + i);
-
 		}
 	}
 }
@@ -51,46 +89,6 @@ void GameWindow::addObject(const sf::Vector2f& location, char c)
   if(itsRobot(c))
  	m_robotExist = true;
 
-}
-//-------------------------------------
-void GameWindow::draw(sf::RenderWindow& window) const
-{
-	drawTile(window);
-	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
-	{
-		m_textureManager.draw(window, m_ImageVec.at(i).getString(), m_ImageVec.at(i).getPosition());
-	}
-}
-//-------------------------------------
-void GameWindow::clearing()
-{
-	m_ImageVec.clear();
-	m_SaveTxtVec.clear();
-	m_robotExist = false;
-
-}
-//-------------------------------------
-void GameWindow::setImageVec(const Image& image)
-{
-	if (itsRobot(m_textureManager.getChar(image.getString())))// if the image is robot
-		m_robotExist = true;
-
-	m_ImageVec.push_back(image);
-}
-//-------------------------------------
-
-void GameWindow::save()
-{
-	for (const auto& image : m_ImageVec)
-	{
-		SaveTXT addNew;
-		addNew.m_col = image.getPosition().x / m_PixelSize;
-		addNew.m_row = (image.getPosition().y -150)/ m_PixelSize;
-		addNew.m_ch = m_textureManager.getChar(image.getString());
-		m_SaveTxtVec.push_back(addNew);
-	}
-
-	write2file();
 }
 //-------------------------------------
 
