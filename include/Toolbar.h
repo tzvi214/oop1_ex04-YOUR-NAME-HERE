@@ -13,7 +13,7 @@ public:
 	void draw(sf::RenderWindow& window) const;
 	void setToolbarWidht(unsigned int);
 	bool pressIntoolbar(const sf::Vector2f&);
-	char getCharPress(const sf::Vector2f&);//?????????????????
+	char getCharPress(const sf::Vector2f&);
 	void clear() { m_buttensVec.clear(); }
 private:
 	std::vector<Button> m_buttensVec;

@@ -14,7 +14,7 @@ void GameWindow::handleNewClick(const sf::Vector2f& location, char c)
 {
 	if (itsRobot(c) && robotExist())
 		return;
-	else if (need2delete(c))
+	 if (need2delete(c))
 		deleteObject(location, c);
 	else
 		addObject(location, c);
@@ -22,24 +22,27 @@ void GameWindow::handleNewClick(const sf::Vector2f& location, char c)
 //-------------------------------------
 void GameWindow::deleteObject(const sf::Vector2f& location, char c)
 {
-	// the function can delete 2 or more object in one time
+
+	auto correctLocation = calculateCorrectLocation(location);
+
 	for (auto i = size_t(0); i < m_ImageVec.size(); i++)
 	{
-		if (m_ImageVec.at(i).createSprite().getGlobalBounds().contains(location))
+		if (m_ImageVec.at(i).getPosition() == correctLocation)                                                                   
 		{
-			if (itsRobot(m_ImageVec.at(i).getchar()))
+			if (itsRobot(m_textureManager.getChar(m_ImageVec.at(i).getString())))
 				m_robotExist = false;
 
 			m_ImageVec.erase(m_ImageVec.begin() + i);
-	
+
 		}
 	}
-
 }
 //-------------------------------------
 void GameWindow::addObject(const sf::Vector2f& location, char c)
 {
-  sf::Vector2f newLocation = calculateCorrectLocation(location) ;
+
+	deleteObject(location, c);// nat to pot two object in one place
+  auto newLocation = calculateCorrectLocation(location) ; 
 
   std::string newObject = m_textureManager.getString(c);
  
@@ -83,7 +86,7 @@ void GameWindow::save()
 		SaveTXT addNew;
 		addNew.m_col = image.getPosition().x / m_PixelSize;
 		addNew.m_row = (image.getPosition().y -150)/ m_PixelSize;
-		addNew.m_ch = image.getchar();
+		addNew.m_ch = m_textureManager.getChar(image.getString());
 		m_SaveTxtVec.push_back(addNew);
 	}
 
@@ -102,7 +105,6 @@ void GameWindow::write2file() const
 
 	for (const auto& chTXT : m_SaveTxtVec)
 	{
-	//	board[chTXT.m_row][chTXT.m_col] = chTXT.m_ch;
 		board.at(chTXT.m_row).at(chTXT.m_col) = chTXT.m_ch;
 	}
 
@@ -136,18 +138,17 @@ sf::Vector2f GameWindow::calculateCorrectLocation(const sf::Vector2f& location)
 	y *= m_PixelSize;
 	return sf::Vector2f(x, y);
 }
-
 //-------------------------------------
 void GameWindow::drawTile(sf::RenderWindow& window) const
 {
-	for (int i = 0; i < m_col; i++)
-	{
-		for (int j = 0; j < m_row; j++)
-		{
-			sf::Vector2f location;
-			location.x = i * m_PixelSize;
-			location.y = j * m_PixelSize + 150;// toolbar height
-			m_textureManager.draw(window, "tile", location);
-		}
-	}
+   for (int i = 0; i < m_col; i++)
+   {
+   	 for (int j = 0; j < m_row; j++)
+   	 {
+   	    sf::Vector2f location;
+   	 	location.x = i * m_PixelSize;
+   	 	location.y = j * m_PixelSize + 150;// toolbar height
+   	 	m_textureManager.draw(window, "tile", location);
+   	 }
+   }
 }

@@ -18,6 +18,9 @@ public:
 	void draw(sf::RenderWindow& window) const;
 	void clearing();
 	void setImageVec(const Image& image); 
+	bool robotExist() const { return m_robotExist; } 
+	bool itsRobot(char c) const { return c == m_robot; } 
+	sf::Vector2f calculateCorrectLocation(const sf::Vector2f& location);
 private:
 	       //---data_member---
 	std::vector <Image> m_ImageVec;
@@ -32,11 +35,9 @@ private:
 	         //---function----
 
 	void drawTile(sf::RenderWindow& ) const;
-	bool robotExist() const { return m_robotExist; }
-	bool itsRobot(char c) const {return c == m_robot ; }
 	bool need2delete(char c) const { return c == 'E'; }
 	void deleteObject(const sf::Vector2f & location, char c);
 	void addObject(const sf::Vector2f& location, char c);
 	void write2file() const;
-	sf::Vector2f calculateCorrectLocation(const sf::Vector2f& location) ;
+	
 };

@@ -33,5 +33,6 @@ sf::Sprite Button::createSprite() const
 
 const sf::Texture& Button::getTexture() const
 {
+	
 	return m_textureManager.getTexture(m_name);
 }

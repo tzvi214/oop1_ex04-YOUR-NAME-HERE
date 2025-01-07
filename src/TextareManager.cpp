@@ -11,12 +11,12 @@ TextureManager::TextureManager()
         std::cerr << "Failed to load wall.jpg\n";
     if (!m_robotTex.loadFromFile("robot.jpg"))
         std::cerr << "Failed to load robot.jpg\n";
-    if (!m_rockTex.loadFromFile("bomb.jpg"))
-        std::cerr << "Failed to load bomb.jpg\n";
+    if (!m_rockTex.loadFromFile("rock.jpg"))
+        std::cerr << "Failed to load rock.jpg\n";
     if (!m_clearPageTex.loadFromFile("clearPage.jpg"))
         std::cerr << "Failed to load clearPage.jpg\n";
-    if (!m_saveTex.loadFromFile("save.jpeg"))
-        std::cerr << "Failed to load save.jpeg\n";
+    if (!m_saveTex.loadFromFile("save.jpg"))
+        std::cerr << "Failed to load save.jpg\n";
     if (!m_eraserTex.loadFromFile("eraser.jpg"))
         std::cerr << "Failed to load eraser.jpg\n";
     if (!m_tileTex.loadFromFile("tile.jpg"))

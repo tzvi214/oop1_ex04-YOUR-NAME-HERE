@@ -1,81 +1,64 @@
 ﻿#include "Painter.h"
-#include <iostream>
-#include <filesystem>
 
 void Painter::run()
 {
-    unsigned int boardHeight = 0, boardWidth = 0;
-
-    bool userClearAll = false;
+  unsigned int boardHeight = 0, boardWidth = 0;
+  bool userClearAll = false;
  
-    do
-    {
-     
-        // if user clear all, the dimensions will be 0, and the user will need to enter the dimensions again.
-        loadBoardDimensions(boardHeight, boardWidth, userClearAll);
-        userClearAll = false;
+   do
+   {
+       // if user clear all, the dimensions will be 0, and the user will need to enter the dimensions again.
+       loadBoardDimensions(boardHeight, boardWidth, userClearAll);
+	   userClearAll = false;//to the next iteration.
 
-        std::cout << "Final dimensions: Width = " << boardWidth << ", Height = " << boardHeight << "\n";
+       std::cout << "Final dimensions: Width = " << boardWidth << ", Height = " << boardHeight << "\n";
 
+       unsigned int heightPixel = boardHeight * m_PixelSize;
+       unsigned int widthPixel = boardWidth * m_PixelSize;
+       m_toolBar.setToolbarWidht(widthPixel);
+       m_toolBar.updateVecButten();
 
-        unsigned int heightPixel = boardHeight * m_PixelSize;
-        unsigned int widthPixel = boardWidth * m_PixelSize;
-        m_toolBar.setToolbarWidht(widthPixel);
-        m_toolBar.updateVecButten();
+       // set size board for GamWindow.
+       m_gameWindow.setRow(boardHeight);
+       m_gameWindow.setCol(boardWidth);
+       auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + m_toolbarHeight), "TOOLBAR PROGRAM");
 
-        // set size board for GamWindow.
-        m_gameWindow.setRow(boardHeight);
-        m_gameWindow.setCol(boardWidth);
-
-        auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + m_toolbarHeight), "TOOLBAR PROGRAM");
-
-
-        while (window.isOpen())
-        {
-            window.clear();
-            m_toolBar.draw(window); // draw "Toolbar"
-            m_gameWindow.draw(window); // draw "gameWindow"
-            window.display();
-
-			handleWindowEvents(window, userClearAll);
-            if (userClearAll)
-            {
-                break;
-            }
-        }
+       while (window.isOpen())
+       {
+         updateWindow(window);
+		 handleWindowEvents(window, userClearAll);
+       }
 
 	} while (userClearAll);
+
 }
 
 //--------- private_function -------
 void Painter::handlePress(sf::RenderWindow& window, sf::Vector2f& location, bool& userClearAll)
 {
-    while (window.isOpen())
-    {
-        // check what was the user press ?
-        char c = m_toolBar.getCharPress(location);
-        if (nedd2save(c))
-        {
-            // save Function.
-            save();
-            std::cout << "saving... \n \n";
-            return;
-        }
-        else if (need2clear(c))
-        {
-            // clear all
-            std::cout << "clearing All... \n ";
-            clearing();
-            window.close();
-            userClearAll = true;
-            return;
-        }
-        else if (need2add(c))
-        {
-            AddingObjects(window, location, c);
-        }
-    }
-
+   while (window.isOpen())
+   {
+      // check what was the user press ?
+      char c = m_toolBar.getCharPress(location);
+      if (nedd2save(c))
+      {
+         save();
+         std::cout << "saving... \n";
+         return;
+      }
+      else if (need2clear(c))
+      {
+         std::cout << "clearing All... \n";
+         clearing();
+         window.close();
+         userClearAll = true;
+         return;
+      }
+      else if (need2add(c))
+      {
+         AddingObjects(window, location, c);
+      }
+   }
 }
 //--------------------------------------------------------------
 bool Painter::need2add(char c) const
@@ -84,10 +67,10 @@ bool Painter::need2add(char c) const
 }
 //--------------------------------------------------------------
 void Painter::AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, char c)
-{
+{  
+  auto tempSprite = createTempSprite(c);
+  sf::Event event;
 
-
-    sf::Event event;
     while (window.waitEvent(event))
     {
         if (event.type == sf::Event::Closed)
@@ -95,7 +78,15 @@ void Painter::AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, ch
             window.close();
             return;
         }
-        if (event.type == sf::Event::MouseButtonReleased)
+        if (event.type == sf::Event::MouseMoved)
+        {
+            location = window.mapPixelToCoords(
+                { event.mouseMove.x, event.mouseMove.y }); 
+			if (!m_gameWindow.itsRobot(c) || !m_gameWindow.robotExist())// if the user press on the robot, he can move it only if the robot dosnt exist.
+			       printMovement(window ,location, tempSprite);
+        }
+
+        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
 
             location = window.mapPixelToCoords(
@@ -105,11 +96,7 @@ void Painter::AddingObjects(sf::RenderWindow& window, sf::Vector2f& location, ch
             if (!m_toolBar.pressIntoolbar(location))
             {
                 m_gameWindow.handleNewClick(location, c);
-
-                window.clear();
-                m_toolBar.draw(window);
-                m_gameWindow.draw(window);
-                window.display();
+                updateWindow(window);
             }
 
             else if (m_toolBar.pressIntoolbar(location))
@@ -167,11 +154,11 @@ void Painter::readFromFile(std::ifstream& file, unsigned int& boardHeight, unsig
     file >> boardHeight; 
     file >> boardWidth; 
     char c;
-    file >> std::noskipws >> c;
+	file >> std::noskipws >> c; // read the '\n' character.
 
     for (int i = 0; i < boardHeight; i++)
     {
-        for (int j = 0; j <= boardWidth; j++)
+		for (int j = 0; j <= boardWidth; j++)// <= because we need to read the '\n' character.
         {
             file >> std::noskipws >> c;
             if (need2add(c))
@@ -183,10 +170,46 @@ void Painter::readFromFile(std::ifstream& file, unsigned int& boardHeight, unsig
     }
 }
 //--------------------------------------------------------------
+void Painter::printMovement(sf::RenderWindow& window, sf::Vector2f& location, sf::Sprite& movement) 
+{
+   if (!m_toolBar.pressIntoolbar(location)) // if the user press on the "GameWindow"
+   {
+      
+       window.clear();
+       m_toolBar.draw(window);
+       m_gameWindow.draw(window);
+       movement.setPosition(location);
+       window.draw(movement);
+       window.display();
+
+   }
+   else
+   {
+       updateWindow(window);
+   }
+ }
+//--------------------------------------------------------------
+sf::Sprite Painter::createTempSprite(char c)
+{
+    auto newSprite = sf::Sprite();
+
+	// the user will do setPosition for the sprite.
+    newSprite.setTexture(m_textureManager.getTexture(c));
+    newSprite.setScale(0.25f, 0.25f);
+    newSprite.setOrigin(m_pictureSize / 2.f, m_pictureSize / 2.f);
+    if(c == 'E')// if i am clearing
+        newSprite.setColor(sf::Color(255, 255, 255, 255));
+    else
+        newSprite.setColor(sf::Color(255, 255, 255, 123));
+    return newSprite;
+
+	
+}
+//--------------------------------------------------------------
 void Painter::handleWindowEvents(sf::RenderWindow& window, bool& userClearAll)
 {
-	sf::Event event;
-    while (window.pollEvent(event))
+  sf::Event event;
+    if (window.pollEvent(event))//  while (window.pollEvent(event))
     {
         // close window
         if (event.type == sf::Event::Closed)
@@ -194,8 +217,7 @@ void Painter::handleWindowEvents(sf::RenderWindow& window, bool& userClearAll)
             window.close();
             return;
         }
-
-        // action.
+         // action.
         if (event.type == sf::Event::MouseButtonReleased)
         {
             auto location = window.mapPixelToCoords(
@@ -213,4 +235,13 @@ void Painter::handleWindowEvents(sf::RenderWindow& window, bool& userClearAll)
             return;
         }
     }
+}
+//--------------------------------------------------------------
+void Painter::updateWindow(sf::RenderWindow& window) const
+{
+    window.clear();
+    m_toolBar.draw(window); // draw "Toolbar"
+    m_gameWindow.draw(window); // draw "gameWindow"
+    window.display();
+
 }
