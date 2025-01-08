@@ -16,9 +16,10 @@ public:
 
 private:
 	//---data_member---
+
 	const unsigned int m_PixelSize = 50; 
 	const float m_pictureSize = 200;
-	TextureManager m_textureManager;
+	const TextureManager m_textureManager;
 	ToolBar m_toolBar;
 	GameWindow m_gameWindow;
 

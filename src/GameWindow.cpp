@@ -1,5 +1,11 @@
 ﻿#include "GameWindow.h"
 
+
+GameWindow::GameWindow(const TextureManager& textureManager)
+	: m_textureManager(textureManager)
+{ }
+//-------------------------------------
+
 void GameWindow::setRow(unsigned int row)
 {
 	m_row = row;

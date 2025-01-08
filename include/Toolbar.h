@@ -8,12 +8,12 @@
 #include "TextureManager.h"
 
 
-const float m_toolbarHeight = 150;
+const float toolbarHeight = 150;
 
 class ToolBar
 {
 public:
-	ToolBar();
+	ToolBar(const TextureManager&);
 	void updateVecButten();
 	void draw(sf::RenderWindow& window) const;
 	void setToolbarWidht(unsigned int);
@@ -24,5 +24,5 @@ private:
 	std::vector<Button> m_buttensVec;
 	unsigned int m_toolbarWidht;
 	int m_numButten;
-	TextureManager m_textureManager;
+	const TextureManager& m_textureManager;
 };

@@ -11,6 +11,7 @@
 class GameWindow
 {
 public:
+	GameWindow(const TextureManager&);
 	void setRow(unsigned int);
 	void setCol(unsigned int);
 	void save();
@@ -26,10 +27,11 @@ private:
 	char m_robot = '/';
 	bool m_robotExist = false;
 	std::vector <SaveTXT> m_SaveTxtVec;
-	TextureManager m_textureManager;
+	const TextureManager& m_textureManager;
+	
 	const float m_PixelSize = 50;
-	unsigned int m_col;
-	unsigned int m_row;
+	unsigned int m_col = 0;//defult
+	unsigned int m_row = 0;//defult
 	
 	         //---function----
 

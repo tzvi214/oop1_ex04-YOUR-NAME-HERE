@@ -12,7 +12,6 @@ public:
 	char getChar(const std::string&)const;
 	std::string getString(const char) const;
 	void draw(sf::RenderWindow& , std::string,  sf::Vector2f) const;
-
 private:
 	sf::Texture m_guardTex;
 	sf::Texture m_doorTex;

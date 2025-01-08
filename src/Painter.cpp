@@ -1,7 +1,12 @@
 ﻿#include "Painter.h"
 
+
+//--------------------------------------------------------------
+//  to load the TextureManager only once. because the TextureManager load all the textures.
 Painter::Painter()
-    
+: m_textureManager(),
+m_toolBar(m_textureManager),
+m_gameWindow(m_textureManager)
 { }
 //--------------------------------------------------------------
 void Painter::run()
@@ -9,6 +14,7 @@ void Painter::run()
   unsigned int boardHeight = 0, boardWidth = 0;
   bool userClearAll = false;
  
+
    do
    {
        // if user clear all, the dimensions will be 0, and the user will need to enter the dimensions again.
@@ -25,7 +31,7 @@ void Painter::run()
        // set size board for GamWindow.
        m_gameWindow.setRow(boardHeight);
        m_gameWindow.setCol(boardWidth);
-       auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + m_toolbarHeight), "TOOLBAR PROGRAM");
+       auto window = sf::RenderWindow(sf::VideoMode(widthPixel, heightPixel + toolbarHeight), "TOOLBAR PROGRAM");
 
        while (window.isOpen())
        {
@@ -165,7 +171,7 @@ void Painter::readFromFile(std::ifstream& file, unsigned int& boardHeight, unsig
             file >> std::noskipws >> c;
             if (need2add(c))
             {
-                Image image(m_textureManager.getString(c), sf::Vector2f(j * m_PixelSize, i * m_PixelSize + m_toolbarHeight));
+                Image image(m_textureManager.getString(c), sf::Vector2f(j * m_PixelSize, i * m_PixelSize + toolbarHeight));
 				m_gameWindow.setImageVec(image);
             }
         }
@@ -202,7 +208,7 @@ sf::Sprite Painter::createTempSprite(char c)
     if(c == 'E')// if i am clearing
         newSprite.setColor(sf::Color(255, 255, 255, 255));
     else
-        newSprite.setColor(sf::Color(255, 255, 255, 123));
+        newSprite.setColor(sf::Color(255, 255, 255, 170));
    
     return newSprite;
 }

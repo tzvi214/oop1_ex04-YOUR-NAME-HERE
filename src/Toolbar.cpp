@@ -1,6 +1,10 @@
 ﻿#include "Toolbar.h"
 
-ToolBar::ToolBar() : m_toolbarWidht(0), m_numButten(8) {}// 8 is the number of buttons in the toolbar
+ToolBar::ToolBar(const TextureManager& textureManager)
+	: m_toolbarWidht(0), m_numButten(8) 
+	, m_textureManager(textureManager)
+
+{}// 8 is the number of buttons in the toolbar
 
 //---------------------------------------------------------
 void ToolBar::updateVecButten()
@@ -60,7 +64,7 @@ bool ToolBar::pressIntoolbar(const sf::Vector2f& location)
 {
 	if (location.x < 0 || location.x > m_toolbarWidht)
 		return false;
-	if (location.y < 0 || location.y > m_toolbarHeight)
+	if (location.y < 0 || location.y > toolbarHeight)
 		return false;
 
 	return true;
